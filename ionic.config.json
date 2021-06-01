@@ -1,5 +1,7 @@
 {
   "name": "Peluqueria",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

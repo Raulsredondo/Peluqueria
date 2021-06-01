@@ -16,7 +16,7 @@
     <ion-card-header tappable (click)="collapseCard = !collapseCard">
       <ion-card-title>New Event</ion-card-title>
     </ion-card-header>
-    <ion-card-content *ngIf="!collapseCard">
+    <ion-card-content *ngIf="collapseCard">
 
       <ion-item>
         <ion-input type="text" placeholder="Title" [(ngModel)]="event.title"></ion-input>
@@ -34,8 +34,8 @@
 
             <ion-item *ngFor="let ser of event.servicio">
               <ion-label  >{{ser.precio}}</ion-label>
-              <input type="text" id="hola" value="{{ser.precio}}">
-              <ion-radio slot="start"  value="{{ser.precio}}"></ion-radio>
+              <input type="text" required id="hola" value="{{ser.servicio}}">
+              <ion-radio slot="start" required  value="{{ser.precio}}"></ion-radio>
             </ion-item>
 
           </ion-radio-group>
