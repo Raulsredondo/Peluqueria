@@ -24,7 +24,7 @@ export class EventoService {
     })
   };
 
-
+  prueba:string = sessionStorage.getItem('access_token');
   constructor(private http: HttpClient) { }
 
 
@@ -35,11 +35,11 @@ export class EventoService {
     console.log(evento)
 
 
-    return this.http.post(this.URL_API, evento);
+    return this.http.post(this.URL_API+'?token='+this.prueba, evento);
   }
 
   getEventos() {
-    return this.http.get(this.URL_API)
+    return this.http.get(this.URL_API+'?token='+this.prueba)
       .pipe(
         map(this.crearArreglo),
         delay(0)
@@ -48,11 +48,11 @@ export class EventoService {
 
   deleteEvento(_id: string) {
     _id.toString()
-     return this.http.delete(this.URL_API +  `/${_id}`);
+     return this.http.delete(this.URL_API +  `/${_id}`+'?token='+this.prueba);
   }
 
   getEventosId(id) {
-    return this.http.get(this.URL_API + `/${id}`)
+    return this.http.get(this.URL_API + `/${id}`+'?token='+this.prueba)
       .pipe(
         map(this.crearArreglo),
         delay(0)

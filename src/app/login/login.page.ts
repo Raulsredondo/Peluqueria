@@ -4,6 +4,8 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { LoginService } from '../services/login/login.service';
 import { first } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js'; 
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
 
 @Component({
   selector: 'app-login',
@@ -18,13 +20,25 @@ export class LoginPage {
   public error: string;
   encrypted;
 
-  constructor(private alertCtrl: AlertController, private auth: LoginService, private router: Router) { }
 
 
 
+  constructor(private alertCtrl: AlertController, private auth: LoginService, private router: Router, public googlePlus: GooglePlus) { }
+
+
+  ngOnInit() {
+    
+
+
+  }
 
 
 
+googleLogin(){
+  this.googlePlus.getSigningCertificateFingerprint().then(result => {
+    console.log(result);
+  })
+}
 
 
   public submit() {

@@ -13,11 +13,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './Auth/auth.guard';
 
 
+import { SocialLoginModule, SocialAuthServiceConfig, SocialAuthService } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
+
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, LoginService, RegistrationService,AuthGuard, ],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, SocialLoginModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    GooglePlus,
+    LoginService, 
+    RegistrationService,
+    AuthGuard, 
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

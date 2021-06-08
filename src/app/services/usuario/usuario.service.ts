@@ -33,13 +33,13 @@ export class UsuarioService {
   }
 
   postUsuarios(usuarios: UsuarioModel) {
-    return this.http.post(this.URL_API, usuarios);
+    return this.http.post(this.URL_API+'?token='+this.prueba, usuarios);
   }
     
     
 
   getUsuarios() {
-    return this.http.get(this.URL_API) 
+    return this.http.get(this.URL_API+'?token='+this.prueba) 
     .pipe(
       map( this.crearArreglo ),
       delay(0)
@@ -47,9 +47,9 @@ export class UsuarioService {
   }
 
   getUsuario(id: string){
-    console.log(id)
+    
 
-    return  this.http.get(this.URL_API+ `/${id}`);
+    return  this.http.get(this.URL_API+ `/${id}`+'?token='+this.prueba);
   }
 
   putUsuarios(usuarios: UsuarioModel) {

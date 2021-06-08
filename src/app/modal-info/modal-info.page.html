@@ -36,6 +36,18 @@
         <ion-select-option value='USER_ROLE'>USER_ROLE</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <div *ngIf="!hola" class="custom-file">
+      <form action="/api/upload" method="post" enctype="multipart/form-data">
+      <input type="file" class="custom-file-input" (change)="onFileChange($event)" id="customFile">
+      <label class="custom-file-label"  for="customFile">Choose file</label>
+      </form>
+
+    </div>
+
+    <img [src]="img" style="width: 50%; height: 50%;">
+
+
     <ion-row *ngIf="!hola">
       <ion-col>
         <ion-button type="submit" color="danger" expand="block">Editar</ion-button>
@@ -46,6 +58,8 @@
         <ion-button type="submit" color="danger" expand="block">Añadir</ion-button>
       </ion-col>
     </ion-row>
+
+    
 
 
   </form>

@@ -30,6 +30,7 @@ export class Tab3Page {
 
   constructor(private modalCtrl: ModalController, private eventService: EventoService, private alertCtrl: AlertController, private auth: LoginService, private usu: UsuarioService) { }
   ngOnInit() {
+    
     this.id = sessionStorage.getItem('user_id')
     this.nombre = sessionStorage.getItem('user_nom')
     this.email = sessionStorage.getItem('user_ema')
@@ -141,15 +142,14 @@ export class Tab3Page {
     await alert.present();
   }
 
-  async info2(usuario: UsuarioModel) {
-    const alert = await this.alertCtrl.create({
-      header: usuario.nombre,
-      subHeader: usuario.email,
-      message: usuario.role,
-      buttons: ['OK']
-    });
+   info2(usuario: UsuarioModel) {
 
-    await alert.present();
+    Swal.fire({
+      title: usuario.nombre,
+      text: usuario.email,
+      imageUrl: 'http://localhost:3000/img/usuarios/'+usuario.img,
+      imageHeight: 100,
+      showConfirmButton: true,
+    })
   }
-
 }

@@ -21,6 +21,13 @@
     
     <ion-card-content *ngIf="collapseCard">
 
+      <ion-item *ngIf="role2">
+        <ion-label>Usuario</ion-label>
+        <ion-select name="usuario" [(ngModel)]="idusuario">
+          <ion-select-option value='{{usuario._id}}' *ngFor="let usuario of usuarios">{{usuario.nombre}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
       <ion-item>
         <ion-input type="text" placeholder="Title" required [(ngModel)]="event.title"></ion-input>
       </ion-item>
