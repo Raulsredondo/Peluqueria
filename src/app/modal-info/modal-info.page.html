@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="salir()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="!hola">Editar {{usuario.nombre}}</ion-title>
+    <ion-title *ngIf="hola">Añadir</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="submit( f )" #f="ngForm">
+
+    <div class="input-group mb-3 form-group">
+      <ion-input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="usuario.nombre" name="nombre"
+        required></ion-input>
+    </div>
+    <small>example@dominio.com</small>
+    <div class="input-group mb-3 form-group">
+      <ion-input ype="email" class="form-control" placeholder="Email"
+        pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+        [(ngModel)]="usuario.email" name="email" required></ion-input>
+    </div>
+    <small>6 caracteres minimo</small>
+    <div class="input-group mb-3 form-group">
+      <input type="password" class="form-control" placeholder="Password " [(ngModel)]="usuario.password" name="password"
+        required minlength="6" required><small class="form-text text-muted"></small>
+    </div>
+    <ion-item>
+      <ion-label>Rol</ion-label>
+      <ion-select name="role" [(ngModel)]=usuario.role>
+        <ion-select-option value='ADMIN_ROLE'>ADMIN_ROLE</ion-select-option>
+        <ion-select-option value='USER_ROLE'>USER_ROLE</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-row *ngIf="!hola">
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Editar</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="hola">
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Añadir</ion-button>
+      </ion-col>
+    </ion-row>
+
+
+  </form>
+
+
+
+
+
+
+
+</ion-content>

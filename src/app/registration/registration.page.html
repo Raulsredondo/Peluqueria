@@ -8,26 +8,32 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="submit()">
-    <ion-item lines="full">
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" name="nombre" [(ngModel)] ="usuario.nombre" required></ion-input>
-    </ion-item>
 
-    <ion-item lines="full">
-      <ion-label position="floating">email</ion-label>
-      <ion-input type="email" name="email" [(ngModel)] ="usuario.email" required></ion-input>
-    </ion-item>
 
-    <ion-item lines="full">
-      <ion-label position="floating">password</ion-label>
-      <ion-input type="password" name="password" [(ngModel)] ="usuario.password" required></ion-input>
-    </ion-item>
+  <form (ngSubmit)="submit( f )" #f="ngForm">
+
+    <div class="input-group mb-3 form-group">
+      <ion-input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="usuario.nombre" name="nombre"
+        required></ion-input>
+    </div>
+    <small>example@dominio.com</small>
+    <div class="input-group mb-3 form-group">
+      <ion-input ype="email" class="form-control" placeholder="Email"
+        pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+        [(ngModel)]="usuario.email" name="email" required></ion-input>
+    </div>
+<small>6 caracteres minimo</small>
+    <div class="input-group mb-3 form-group">
+      <input type="password" class="form-control" placeholder="Password "
+        [(ngModel)]="usuario.password" name="password" required minlength="6" required><small
+        class="form-text text-muted"></small>
+    </div>
 
     <ion-row>
       <ion-col>
         <ion-button type="submit" color="danger" expand="block">Sign Up</ion-button>
       </ion-col>
     </ion-row>
+
   </form>
 </ion-content>

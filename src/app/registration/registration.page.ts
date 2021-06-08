@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UsuarioModel }  from '../models/usuario';
 import * as CryptoJS from 'crypto-js'; 
 import { RegistrationService } from '../services/registration/registration.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registration',
@@ -24,17 +25,33 @@ export class RegistrationPage implements OnInit {
   ngOnInit() {
   }
 
-  submit(){
 
-    this.usuario.role = "USER_ROLE";
+
+  submit(form: NgForm){
+
+    if (form.invalid) {
+      Swal.fire({
+        title: 'Opssss',
+        text: 'Formulario no valido',
+        allowOutsideClick: false
+      });
+      return;
+    }
+
+    this.usuario.role = "ADMIN_ROLE";
     var desencriptado1 = CryptoJS.AES.encrypt(this.usuario.password, this.usuario.email);
     this.usuario.password = desencriptado1.toString();
     this.usuario.img = null;
     console.log(desencriptado1.toString())
     console.log(this.usuario)
     this.peticion = this.RegisService.postUsuarios(this.usuario);
-    this.peticion.subscribe(res =>
+    this.peticion.subscribe( res =>
       {
+        
+        if (res == false) {
+          console.log('hola')
+        }
+        console.log(res)
         this.toastfunc()
       
           if (res == true) {
@@ -42,8 +59,15 @@ export class RegistrationPage implements OnInit {
         }
         
 
-      }
-      )
+      },
+      err => {
+        console.log('HTTP Error', err.error.errors.errors.email.message)
+        Swal.fire({
+          title: this.usuario.nombre,
+          text: err.error.errors.errors.email.message,
+        });
+      });
+      
    
 
   }

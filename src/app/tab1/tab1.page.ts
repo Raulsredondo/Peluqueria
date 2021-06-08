@@ -4,6 +4,14 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { formatDate } from '@angular/common';
 import { PickerController } from "@ionic/angular";
+import { EventModel } from '../models/evento';
+import { Event2Model } from '../models/event2';
+import { EventoService } from '../services/evento/evento.service'
+import { Console } from "console";
+import { NgForm } from "@angular/forms";
+import { empty } from "rxjs";
+import { LoginService } from "../services/login/login.service";
+
 
 @Component({
   selector: 'app-tab1',
@@ -11,6 +19,13 @@ import { PickerController } from "@ionic/angular";
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+
+
+
+
+  medicoid;
+  medicoemail;
+  medicopass;
 
   collapseCard
 
@@ -23,28 +38,8 @@ export class Tab1Page {
   minDate;
   service;
 
-  event = {
-    title: '',
-    desc: '',
-    servicio: [
-      {
-        'precio': 10,
-        'servicio': 'corte de caballero'
-      },
-      {
-        'precio': 5,
-        'servicio': 'corte barba de caballero'
-      },
-      {
-        'precio': 15,
-        'servicio': 'corte de barba y cabello'
-      }
-    ],
-    serviociosele: '',
-    startTime: '',
-    endTime: '',
-    allDay: false
-  };
+  event = new EventModel;
+  event2 = new Event2Model;
 
 
   viewTitle;
@@ -59,9 +54,36 @@ export class Tab1Page {
   eventSource = new Array();
 
 
-  constructor(public toastController: ToastController, private alertCtrl: AlertController, private pikerCtrl: PickerController, @Inject(LOCALE_ID) private locale: string) { }
+  constructor(public EventService: EventoService, private auth: LoginService, public toastController: ToastController, private alertCtrl: AlertController, private pikerCtrl: PickerController, @Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit() {
+
+
+    this.EventService.getEventos().subscribe(eventos => {
+
+
+      eventos.forEach((evento: Event2Model) => {
+
+        evento.startTime = new Date(evento.startTime);
+        evento.endTime = new Date(evento.endTime);
+        this.eventSource.push(evento);
+        console.log(evento)
+        // evento.startTime = new Date.parse(evento.startTime);
+
+
+      });
+    });
+
+
+
+
+
+
+
+    let hola = this.EventService.getEventos()
+    console.log(hola)
+
+
 
     this.minDate = new Date(this.date.getTime() - this.date.getTimezoneOffset() * 60000).toISOString();
 
@@ -80,25 +102,31 @@ export class Tab1Page {
 
   resetEvent() {
     this.event = {
+      _id: '',
+      usuid: '',
+      usunombre: '',
+      usuemail: '',
+      id: '',
       title: '',
       desc: '',
       servicio: [
         {
-          'precio': 10,
-          'servicio': 'corte de caballero'
+
+          
+          'servicio': 'corte de caballero 10€'
         },
         {
-          'precio': 5,
-          'servicio': 'corte barba de caballero'
+          
+          'servicio': 'corte barba de caballero 5€'
         },
         {
-          'precio': 15,
-          'servicio': 'corte de barba y cabello'
+          
+          'servicio': 'corte de barba y cabello 15€'
         }
       ],
       serviociosele: '',
       startTime: '',
-      endTime: new Date().toISOString(),
+      endTime: '',
       allDay: false
     };
   }
@@ -113,60 +141,72 @@ export class Tab1Page {
     await toast.present();
   }
 
+  logout() {
+    this.auth.logout();
+  };
+
   // Create the right event format and reload source
   addEvent() {
     let prueba;
-    if (this.eventSource.length > 0) {
-      console.log('es null el array de ventos')
-    } else {
-      console.log('no es nul')
-    }
-    var inputValue = (<HTMLInputElement>document.getElementById('hola')).value;
+    console.log(this.event.startTime.toString())
+    if (this.event.serviociosele == '') {
+      console.log('esta vacio')
+      this.handleButtonClick3()
+    }else{
+      if (this.event.startTime.toString() == "") {
+        console.log('esta vacio fecha')
+        this.handleButtonClick4()
+      } else {
+        
+      
+    
 
     let eventCopy = {
+      usuid: sessionStorage.getItem('user_id'),
+      usuemail: sessionStorage.getItem('user_ema'),
       title: this.event.title,
-      serviociosele: inputValue,
+      serviociosele: this.event.serviociosele,
       startTime: new Date(this.event.startTime),
       endTime: new Date(this.event.endTime),
       allDay: this.event.allDay,
       desc: this.event.desc
     }
 
+    console.log(eventCopy);
+
     if (eventCopy.startTime.getTime() < this.date.getTime()) {
-      console.log("funciona")
+
       this.handleButtonClick()
     } else {
+
+
       console.log(this.eventSource)
-
-
       if (this.eventSource.length > 0) {
-        console.log('no es nul')
+
         for (let char of this.eventSource) {
-          console.log('recorre el array')
-          console.log(this.eventSource)
-          console.log(char.startTime);
-          console.log(eventCopy.startTime); // prints chars: H e l l o  W o r l d
+          console.log(char)
+          // prints chars: H e l l o  W o r l d
 
 
 
           if (char.startTime.getFullYear() == eventCopy.startTime.getFullYear()) {
-            console.log('año'+ char.startTime.getFullYear(), eventCopy.startTime.getFullYear());
+            console.log('año' + char.startTime.getFullYear(), eventCopy.startTime.getFullYear());
             prueba = false;
             if (char.startTime.getMonth() == eventCopy.startTime.getMonth()) {
-              console.log('mes'+ char.startTime.getMonth(), eventCopy.startTime.getMonth());
+              console.log('mes' + char.startTime.getMonth(), eventCopy.startTime.getMonth());
               prueba = false;
               if (char.startTime.getDay() == eventCopy.startTime.getDay()) {
-                console.log('dia'+ char.startTime.getDay(), eventCopy.startTime.getDay());
+                console.log('dia' + char.startTime.getDay(), eventCopy.startTime.getDay());
                 prueba = false;
                 if (char.startTime.getHours() == eventCopy.startTime.getHours()) {
-                  console.log('hora'+ char.startTime.getHours(), eventCopy.startTime.getHours());
+                  console.log('hora' + char.startTime.getHours(), eventCopy.startTime.getHours());
                   prueba = false;
                   if (char.startTime.getMinutes() == eventCopy.startTime.getMinutes()) {
-                    console.log('minuto'+ char.startTime.getMinutes(), eventCopy.startTime.getMinutes());
+                    console.log('minuto' + char.startTime.getMinutes(), eventCopy.startTime.getMinutes());
                     prueba = false;
                     this.handleButtonClick2()
                     break;
-                    
+
                   } else {
                     prueba = true;
 
@@ -196,10 +236,12 @@ export class Tab1Page {
         }
 
         if (prueba == true) {
-          this.toastfunc()
+
           eventCopy.endTime = new Date(eventCopy.startTime.getTime() + 1800000);
-          
+
           this.eventSource.push(eventCopy);
+
+          this.toservice(eventCopy);
 
           this.resetEvent()
         }
@@ -208,10 +250,14 @@ export class Tab1Page {
       } else {
 
         console.log('es null el array de ventos')
-        this.toastfunc()
+
         eventCopy.endTime = new Date(eventCopy.startTime.getTime() + 1800000);
-        this.eventSource = [];
+
+
         this.eventSource.push(eventCopy);
+
+        this.toservice(eventCopy);
+
 
         this.resetEvent()
 
@@ -225,6 +271,24 @@ export class Tab1Page {
 
 
     }
+  }
+  }
+  }
+
+  toservice(eventCopy) {
+
+    console.log(eventCopy.startTime)
+
+
+
+
+
+    
+    this.EventService.postEvento(eventCopy).subscribe(res => {
+      this.toastfunc()
+
+    }
+    )
   }
 
   @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
@@ -262,21 +326,16 @@ export class Tab1Page {
     let end = formatDate(event.endTime, 'medium', this.locale);
 
     const alert = await this.alertCtrl.create({
-      header: event.title,
-      subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
+      header: event.usuemail,
+      subHeader: event.title + "   " + event.serviociosele,
+      message: 'Fecha: ' + start,
       buttons: ['OK']
     });
     alert.present();
   }
 
   // Time slot was clicked
-  onTimeSelected(ev) {
-    let selected = new Date(ev.selectedTime);
-    this.event.startTime = selected.toISOString();
-    selected.setHours(selected.getHours() + 1);
-    this.event.endTime = (selected.toISOString());
-  }
+
 
   async handleButtonClick() {
     const alert = await this.alertCtrl.create({
@@ -292,6 +351,26 @@ export class Tab1Page {
     const alert = await this.alertCtrl.create({
       header: 'Fecha incorrecta',
       message: 'Hora ya selecionada por otra cita',
+      buttons: ['Ok']
+    });
+
+    await alert.present();
+  }
+
+  async handleButtonClick3() {
+    const alert = await this.alertCtrl.create({
+      header: 'Servicio no seleccionado',
+      message: 'Seleciona un servicio para continuar',
+      buttons: ['Ok']
+    });
+
+    await alert.present();
+  }
+
+  async handleButtonClick4() {
+    const alert = await this.alertCtrl.create({
+      header: 'Fecha no selecionada',
+      message: 'Seleciona una fecha para continuar',
       buttons: ['Ok']
     });
 
@@ -343,4 +422,9 @@ export class Tab1Page {
 
     return options;
   }
+
+
+
+
+  
 }

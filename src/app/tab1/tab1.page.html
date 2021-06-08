@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-title>
       {{ viewTitle }}
     </ion-title>
@@ -13,72 +13,77 @@
 
   <!-- Card for adding a new event -->
   <ion-card>
+
     <ion-card-header tappable (click)="collapseCard = !collapseCard">
       <ion-card-title>New Event</ion-card-title>
     </ion-card-header>
+
+    
     <ion-card-content *ngIf="collapseCard">
 
       <ion-item>
-        <ion-input type="text" placeholder="Title" [(ngModel)]="event.title"></ion-input>
+        <ion-input type="text" placeholder="Title" required [(ngModel)]="event.title"></ion-input>
       </ion-item>
+
       <ion-item>
-        <ion-input type="text" placeholder="Description" [(ngModel)]="event.desc"></ion-input>
+        <ion-input type="text" placeholder="Description" required [(ngModel)]="event.desc"></ion-input>
       </ion-item>
+
       <ion-item>
-        <ion-list >
-          <ion-list-header>
-            <ion-label>Servicio</ion-label>
-          </ion-list-header>
-          <ion-radio-group>
-
-
-            <ion-item *ngFor="let ser of event.servicio">
-              <ion-label  >{{ser.precio}}</ion-label>
-              <input type="text" required id="hola" value="{{ser.servicio}}">
-              <ion-radio slot="start" required  value="{{ser.precio}}"></ion-radio>
-            </ion-item>
-
-          </ion-radio-group>
-        </ion-list>
+        <div class="container">
+          <label for="">Servicio</label>
+          <div class="radio" *ngFor="let key of event.servicio">
+            <div class="row">
+              <label>
+                <input type="radio"  name="keys_on_hand" required [value]='key.servicio'
+                  [(ngModel)]="event.serviociosele">{{key.servicio}}
+              </label>
+            </div>
+          </div>
+        </div>
       </ion-item>
+
       <ion-item>
         <ion-label>Start</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
+        <ion-datetime required displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
           hour-values="09,10,11,12,13,14,15,16,17,18,19,20" minuteValues="0,30" [value]="minDate"
           [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label>All Day?</ion-label>
-        <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
+        <ion-checkbox required [(ngModel)]="event.allDay"></ion-checkbox>
       </ion-item>
-      <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == ''">Add Event
+      <ion-button fill="outline" expand="block" color="secondary" (click)="addEvent()" [disabled]="event.title == ''">
+        Add Event
       </ion-button>
 
     </ion-card-content>
+
   </ion-card>
 
   <ion-row>
     <!-- Change the displayed calendar mode -->
     <ion-col size="4">
-      <ion-button expand="block" (click)="changeMode('month')">Month</ion-button>
+      <ion-button expand="block" color="secondary" (click)="changeMode('month')">Month</ion-button>
     </ion-col>
     <ion-col size="4">
-      <ion-button expand="block" (click)="changeMode('week')">Week</ion-button>
+      <ion-button expand="block" color="secondary" (click)="changeMode('week')">Week</ion-button>
     </ion-col>
     <ion-col size="4">
-      <ion-button expand="block" (click)="changeMode('day')">Day</ion-button>
+      <ion-button expand="block" color="secondary" (click)="changeMode('day')">Day</ion-button>
     </ion-col>
-
+  </ion-row>
+  <ion-row>
     <!-- Move back one screen of the slides -->
-    <ion-col size="6" text-left>
+    <ion-col size="6" class="ion-align-self-start">
       <ion-button fill="clear" (click)="back()">
         <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-col>
 
     <!-- Move forward one screen of the slides -->
-    <ion-col size="6" text-right>
+    <ion-col size="6" class="ion-align-self-end">
       <ion-button fill="clear" (click)="next()">
         <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
       </ion-button>

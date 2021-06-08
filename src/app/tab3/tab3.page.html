@@ -1,17 +1,124 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/login" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="abrirModal()">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <div class="empty bg-secondary"></div>
+  <div class="ion-text-center image-over-div">
+    <img src="https://image.flaticon.com/icons/svg/163/163809.svg" alt="" class="image-round border-white">
+  </div>
+
+  <div class="ion-text-center">
+    <h1 *ngIf="rol">ADMINISTRADOR</h1>
+    <h4>{{nombre}}</h4>
+    <h4>{{email}}</h4>
+    <p class="text-profile">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus veritatis ut distinctio
+    </p>
+    <ion-button color="secondary" size="small">
+      Follow
+    </ion-button>
+  </div>
+
+  <ion-card>
+
+    <ion-card-header tappable (click)="collapseCard = !collapseCard">
+      <ion-card-title>Tabla Citas</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="collapseCard">
+      <div class="form-group" style="width: 30%;">
+        <input type="text" class="form-control" name="filterPost2" id="" placeholder="Search.."
+          [(ngModel)]="filterPost2">
+      </div>
+      <div>
+        <table class="table ">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Cita</th>
+              <th scope="col">tools</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let evento of eventos | filter2: filterPost2; let i = index">
+              <td>
+                {{evento.title}}
+              </td>
+              <td>
+                <ion-button color="danger" (click)="borrarEvento( evento, i ) ">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+                <ion-button (click)="info(evento)">
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="rol">
+    <ion-card-header tappable (click)="collapseCard2 = !collapseCard2">
+
+      <ion-card-title>Tabla Usuarios</ion-card-title>
+      
+        <ion-button (click)="add()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
+     
+
+    </ion-card-header>
+
+    <ion-card-content *ngIf="collapseCard2">
+      <div class="form-group" style="width: 30%;">
+        <input type="text" class="form-control" name="filterPost" id="" placeholder="Search.." [(ngModel)]="filterPost">
+      </div>
+
+      <div>
+        <table class="table ">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Usuario</th>
+              <th scope="col">tools</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usuario of usuarios | filter: filterPost; let i = index">
+              <td>
+                {{usuario.nombre}}
+              </td>
+              <td>
+                <ion-button color="danger" (click)="borrarEvento( usuario, i ) ">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+
+                <ion-button (click)="abrirModal2(usuario._id)">
+                  <ion-icon name="pencil-sharp"></ion-icon>
+                </ion-button>
+
+                <ion-button (click)="info2(usuario)">
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
