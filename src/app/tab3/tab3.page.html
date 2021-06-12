@@ -18,25 +18,24 @@
 
   <div class="empty bg-secondary"></div>
   <div class="ion-text-center image-over-div">
-    <img src="https://image.flaticon.com/icons/svg/163/163809.svg" alt="" class="image-round border-white">
+    <img [src]="img2" alt="" class="image-round border-white">
   </div>
 
   <div class="ion-text-center">
     <h1 *ngIf="rol">ADMINISTRADOR</h1>
     <h4>{{nombre}}</h4>
     <h4>{{email}}</h4>
-    <p class="text-profile">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus veritatis ut distinctio
-    </p>
-    <ion-button color="secondary" size="small">
-      Follow
-    </ion-button>
+
+
   </div>
 
   <ion-card>
 
     <ion-card-header tappable (click)="collapseCard = !collapseCard">
       <ion-card-title>Tabla Citas</ion-card-title>
+      <ion-button color="secondary" (click)="abrirModalPDF('eventos')">
+        <ion-icon name="cloud-download-outline"></ion-icon>
+      </ion-button>
     </ion-card-header>
 
     <ion-card-content *ngIf="collapseCard">
@@ -75,11 +74,15 @@
     <ion-card-header tappable (click)="collapseCard2 = !collapseCard2">
 
       <ion-card-title>Tabla Usuarios</ion-card-title>
+
+      <ion-button (click)="add()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="secondary" (click)="abrirModalPDF('usuario')">
+        <ion-icon name="cloud-download-outline"></ion-icon>
+      </ion-button>
       
-        <ion-button (click)="add()">
-          <ion-icon name="add-circle-outline"></ion-icon>
-        </ion-button>
-     
+
 
     </ion-card-header>
 
@@ -120,5 +123,6 @@
       </div>
     </ion-card-content>
   </ion-card>
+
 
 </ion-content>

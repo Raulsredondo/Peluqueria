@@ -12,6 +12,7 @@ export class ImgService {
 
   readonly URL_API = 'http://localhost:3000';
   readonly URL_API_IMG = 'http://localhost:3000/img';
+  readonly URL_API_img = 'http://localhost:3000/imagenes';
 
 
   constructor(private _http: HttpClient) { }
@@ -24,6 +25,11 @@ export class ImgService {
 
   getImagen(tipo, img) {
     return this._http.get(this.URL_API_IMG + '/'+tipo+'/'+img);
+  }
+
+
+  prueba(img){
+    return this._http.post(this.URL_API_img, img);
   }
 
 }

@@ -19,7 +19,16 @@ const routes: Routes = [
   {
     path: 'modal-info', canActivate: [AuthGuard],
     loadChildren: () => import('./modal-info/modal-info.module').then( m => m.ModalInfoPageModule)
+  },
+  {
+    path: 'modalpdf',
+    loadChildren: () => import('./modalpdf/modalpdf.module').then( m => m.ModalpdfPageModule)
+  },
+  {
+    path: 'cards',
+    loadChildren: () => import('./cards/cards.module').then( m => m.CardsPageModule)
   }
+
 
 
 ];

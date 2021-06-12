@@ -1,43 +1,15 @@
-<ion-content >
-   <ion-header >
-    <ion-toolbar id="hola">
-      <ion-buttons slot="start">
-        <ion-button color="light">
-          <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
-          Favorites
-        </ion-button>
-      </ion-buttons>
-      <ion-title>&nbsp;</ion-title>
-      <ion-buttons slot="end">
-        <ion-button>
-          <ion-icon slot="icon-only"  name="checkmark-circle-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
     </ion-toolbar>
-    <div class="card">
-        <div class="header">
-          <div class="avatar">
-            <img src="../../assets/player104.png" alt="">
-          </div>
-        </div>
-    </div>
-
   </ion-header>
-  
+ 
+  <google-map width="400" height="700" [center]="position">
+    <map-marker [position]="position" [label]="lable">
 
-        <div class="card-body">
-            <div class="user-meta ion-text-center">
-              <h3 class="playername">Roger Federer</h3>
-              <h5 class="country">Switzerland</h5>
-              <h6 class="ranking">Current ranking: <ion-chip>
-                <ion-label>2</ion-label>
-                </ion-chip>
-              </h6>
-            </div>
-            <ion-button expand="full" color="primary">http://rogerfederer.com</ion-button>
-            <ion-button expand="full" color="secondary">@RogerFederer on Twitter</ion-button>
-            <ion-button expand="full" color="secondary">View profile at ATP</ion-button>
-          </div> 
+
+    </map-marker>
+  </google-map>
+
+
 </ion-content>
-
-      

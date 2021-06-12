@@ -65,6 +65,9 @@ export class Tab1Page {
   constructor(public pickerCtrl: PickerController, private usu: UsuarioService, public EventService: EventoService, private auth: LoginService, public toastController: ToastController, private alertCtrl: AlertController, private pikerCtrl: PickerController, @Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit() {
+    
+
+
 
     this.usu.getUsuarios().subscribe(usuarios => {
       this.usuarios = usuarios

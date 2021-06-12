@@ -12,10 +12,18 @@ import { RegistrationService } from './services/registration/registration.servic
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './Auth/auth.guard';
 
+import {GoogleMapsModule} from '@angular/google-maps'; 
+import {MapMarker} from '@angular/google-maps'; 
+
 
 import { SocialLoginModule, SocialAuthServiceConfig, SocialAuthService } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 
 
@@ -23,12 +31,14 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, SocialLoginModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, SocialLoginModule, GoogleMapsModule,],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     GooglePlus,
+    Geolocation,
     LoginService, 
     RegistrationService,
     AuthGuard, 
+    GoogleMapsModule,
   ],
   bootstrap: [AppComponent],
 })

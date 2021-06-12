@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="salir()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>modalpdf</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <div *ngIf="!hola">
+    <div class="table-responsive" id="pdf2">
+      <h1>Lista de Eventos</h1>
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Id Usuario</th>
+            <th>Id</th>
+            <th>Titulo</th>
+            <th>servicio</th>
+            <th>Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evento of eventos">
+            <th>{{evento.usuid}}</th>
+            <td>{{evento._id}}</td>
+            <td>{{evento.title}}</td>
+            <td>{{evento.serviociosele}}</td>
+            <td>{{evento.startTime}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div>
+
+      <button class="btn col col-lg-4 btn-danger btn-block ml-4" (click)="exportPdf2()">Download PDF</button>
+
+      <button class="btn col col-lg-4 btn-danger btn-block ml-4" style="margin-left: 10px;"
+        (click)="salir()">Salir</button>
+
+    </div>
+  </div>
+
+  <div *ngIf="hola">
+    <div class="table-responsive" id="pdf">
+      <h1>Lista de Usuarios</h1>
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <th>{{usuario._id}}</th>
+            <td>{{usuario.nombre}}</td>
+            <td>{{usuario.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div>
+
+      <button class="btn col col-lg-4 btn-danger btn-block ml-4" (click)="exportPdf()">Download PDF</button>
+
+      <button class="btn col col-lg-4 btn-danger btn-block ml-4" style="margin-left: 10px;"
+        (click)="salir()">Salir</button>
+
+    </div>
+  </div>
+</ion-content>

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-//import decode from 'jwt-decode';
 import { tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()

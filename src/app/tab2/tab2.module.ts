@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+import {GoogleMapsModule} from '@angular/google-maps'; 
 import { NgCalendarModule  } from 'ionic2-calendar';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
@@ -17,7 +18,8 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     FormsModule,
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
-    NgCalendarModule
+    NgCalendarModule,
+    GoogleMapsModule
   ],
   declarations: [Tab2Page]
 })

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { EventoService } from '../services/evento/evento.service';
 import { Event2Model } from '../models/event2';
 import { EventModel } from '../models/evento';
@@ -9,6 +9,11 @@ import { ModalInfoPage } from '../modal-info/modal-info.page';
 import { LoginService } from '../services/login/login.service';
 import { UsuarioService } from '../services/usuario/usuario.service';
 import { UsuarioModel } from '../models/usuario';
+import domtoimage from 'dom-to-image';
+
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { ModalpdfPage } from '../modalpdf/modalpdf.page';
 
 @Component({
   selector: 'app-tab3',
@@ -27,8 +32,12 @@ export class Tab3Page {
   collapseCard2;
   filterPost = '';
   filterPost2 = '';
+  img2;
 
-  constructor(private modalCtrl: ModalController, private eventService: EventoService, private alertCtrl: AlertController, private auth: LoginService, private usu: UsuarioService) { }
+
+
+
+  constructor(private modalCtrl: ModalController, private eventService: EventoService, private alertCtrl: AlertController, private auth: LoginService, private usu: UsuarioService) {  }
   ngOnInit() {
     
     this.id = sessionStorage.getItem('user_id')
@@ -66,7 +75,42 @@ export class Tab3Page {
       });
     }
 
+    this.img2 = 'http://localhost:3000/img/usuarios/' + this.img;
+
   }
+
+  exportPdf(id){
+    this.abrirModalPDF(id)
+    const div = document.getElementById('pdf')
+    const options = { background: 'white', height: 845, width: 595 }
+    domtoimage.toPng(div, options).then((dataUrl) => {
+        //Initialize JSPDF
+        const doc = new jsPDF({
+          format: 'a4',
+          unit: 'mm',
+          orientation: 'l'
+      });
+        //Add image Url to PDF
+        doc.addImage(dataUrl, 'PNG', 0, 0, 200, 250, 'landscape')
+        doc.save('pdfDocument.pdf')
+    })
+  
+}
+
+
+  async abrirModalPDF(id) {
+    
+    const modal = await this.modalCtrl.create({
+      component: ModalpdfPage,
+      componentProps: {
+        id: id
+      }
+  
+    });
+    await modal.present();
+  }
+
+
 
 
 

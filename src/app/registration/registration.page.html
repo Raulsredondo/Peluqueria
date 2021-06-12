@@ -22,10 +22,10 @@
         pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
         [(ngModel)]="usuario.email" name="email" required></ion-input>
     </div>
-<small>6 caracteres minimo</small>
+<small>entre 8 y 16 caracteres, un numero, una minúscula y una mayúscula.</small>
     <div class="input-group mb-3 form-group">
       <input type="password" class="form-control" placeholder="Password "
-        [(ngModel)]="usuario.password" name="password" required minlength="6" required><small
+        [(ngModel)]="usuario.password" name="password" pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$" required minlength="6" required><small
         class="form-text text-muted"></small>
     </div>
 

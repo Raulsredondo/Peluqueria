@@ -1,3 +1,31 @@
+
+body {
+    background: #a64b00;
+    color: #eee;
+    font-family: verdana;
+  }
+  
+  p {
+    padding: 0;
+    margin: 0 0 15px 0;
+    font-size: 12px;
+    width: 1000px;
+  }
+  #hide-me {
+    width: 100px;
+    height: 100px;
+    background: #bf7130;
+    display: block;
+    padding: 10px;
+    margin: 0 15px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+    float: left;
+    text-align: center;
+    background: rgba(0, 0, 0, .15);
+  }
+
+
 $image-size: 150px;
 
 .header-md::after {
